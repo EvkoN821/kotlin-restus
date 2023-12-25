@@ -1,6 +1,8 @@
 package com.example.lesson3.repository
 
 import android.util.Log
+import android.widget.EditText
+import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
@@ -9,6 +11,7 @@ import com.example.lesson3.API.ListConnection
 import com.example.lesson3.API.PostId
 import com.example.lesson3.API.PostResult
 import com.example.lesson3.API.PostUser
+import com.example.lesson3.MainActivity
 import com.example.lesson3.MyApplication
 import com.example.lesson3.data.Restaurants
 import com.example.lesson3.data.Restaurant
@@ -16,6 +19,7 @@ import com.example.lesson3.data.Course
 import com.example.lesson3.data.Courses
 import com.example.lesson3.data.Food
 import com.example.lesson3.data.Foods
+import com.example.lesson3.data.Spasibo
 import com.example.lesson3.database.ListDatabase
 import com.example.lesson3.myConsts.TAG
 import kotlinx.coroutines.CoroutineScope
@@ -304,19 +308,20 @@ class AppRepository {
             })
     }
 
-    fun login(userName: String, pwd : String){
-        listAPI.login(PostUser(userName,pwd)).enqueue(object: Callback<Int> {
-            override fun onFailure(call: Call<Int>, t: Throwable) {
+    fun login(userName: String, pwd : String, dickandballs : TextView){
+        listAPI.login(PostUser(userName,pwd)).enqueue(object: Callback<Spasibo> {
+            override fun onFailure(call: Call<Spasibo>, t: Throwable) {
                 Log.d(TAG, "Ошибка получения списка групп", t)
             }
 
             override fun onResponse(
-                call: Call<Int>,
-                response: Response<Int>
+                call: Call<Spasibo>,
+                response: Response<Spasibo>
             ) {
                 if (response.code() == 200) {
-
-
+                    val resp = response.body()
+                    dickandballs.text = resp?.items.toString()
+                    dickandballs.callOnClick()
                 }
             }
         })

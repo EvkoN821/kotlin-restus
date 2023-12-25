@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.addCallback
+import androidx.core.view.isVisible
 import com.example.lesson3.data.Food
 import com.example.lesson3.fragments.FacultyFragment
 import com.example.lesson3.fragments.CourseFragment
@@ -16,23 +17,36 @@ import com.example.lesson3.fragments.FoodInputFragment
 import com.example.lesson3.interfaces.MainActivityCallbacks
 import com.example.lesson3.repository.AppRepository
 
-class MainActivity : AppCompatActivity(), MainActivityCallbacks {
+public class MainActivity : AppCompatActivity(), MainActivityCallbacks {
     interface Edit{
         fun append()
         fun update()
         fun delete()
     }
 
-//    var userType : Int = -1
-//    val etLogin : EditText = findViewById(R.id.etLogin)
-//    val etPwd : EditText = findViewById(R.id.etPwd)
-//    val authErr : TextView = findViewById(R.id.authError)
-    override fun onCreate(savedInstanceState: Bundle?) {
+    data object AuthStatus{
+        var userType: Int = -1
+    }
 
+//    public var userType : Int = -1
+    lateinit var etLogin : EditText
+    lateinit var etPwd : EditText
+    lateinit var btnAuth : Button
+    lateinit var authBrurb : TextView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        setContentView(R.layout.fragment_auth)
-//        findViewById<Button>(R.id.btnAuth).setOnClickListener(auth)
+        setContentView(R.layout.fragment_auth)
+        etLogin = findViewById(R.id.etLogin)
+        etPwd = findViewById(R.id.etPwd)
+        btnAuth = findViewById(R.id.btnAuth)
+        btnAuth.setOnClickListener(auth)
+        authBrurb = findViewById(R.id.authBrurb)
+        authBrurb.setOnClickListener(sukablyad)
+        authBrurb.text = "-1"
+
+
 //
 //        while (true){
 //            if (userType != -1){
@@ -40,8 +54,43 @@ class MainActivity : AppCompatActivity(), MainActivityCallbacks {
 //            }
 //        }
 
-        setContentView(R.layout.activity_main)
 
+    }
+
+
+//
+    val auth = View.OnClickListener {
+        btnAuth.error = null
+        var errLogin = false
+        var errPwd = false
+        if (etLogin.text.toString().isBlank()){
+            etLogin.error = "Пустой логин!"
+            errLogin = true
+        } else {
+            etPwd.error = null
+        }
+        if (etPwd.text.toString().isBlank()){
+            etPwd.error = "Пустой пароль!"
+            errPwd = true
+        } else {
+            etPwd.error = null
+        }
+        if (!errLogin && !errPwd) {
+            AppRepository.getInstance().login(etLogin.text.toString(), etPwd.text.toString(), authBrurb)
+        }
+    }
+
+    val sukablyad = View.OnClickListener {
+        AuthStatus.userType = authBrurb.text.toString().toInt()
+        if (AuthStatus.userType != -1){
+            start()
+        } else {
+            btnAuth.error = "Неверный логин/пароль!"
+        }
+    }
+
+    fun start(){
+        setContentView(R.layout.activity_main)
         onBackPressedDispatcher.addCallback(this){
             if(supportFragmentManager.backStackEntryCount>0){
                 supportFragmentManager.popBackStack()
@@ -67,26 +116,6 @@ class MainActivity : AppCompatActivity(), MainActivityCallbacks {
         }
         showFragment(activeFragment, null)
     }
-//
-//    val auth = View.OnClickListener {
-//        var errLogin = false
-//        var errPwd = false
-//        if (etLogin.text.toString().isBlank()){
-//            etLogin.error = "Пустой логин!"
-//            errLogin = true
-//        } else {
-//            etPwd.error = null
-//        }
-//        if (etPwd.text.toString().isBlank()){
-//            etPwd.error = "Пустой пароль!"
-//            errPwd = true
-//        } else {
-//            etPwd.error = null
-//        }
-//        if (!errLogin && !errPwd) {
-//            AppRepository.getInstance().login(etLogin.text.toString(), etPwd.text.toString())
-//        }
-//    }
 
     private var _miAppendFaculty: MenuItem?= null
     private var _miUpdateFaculty: MenuItem?= null
@@ -110,14 +139,20 @@ class MainActivity : AppCompatActivity(), MainActivityCallbacks {
     var activeFragment : NamesOfFragment=NamesOfFragment.FACULTY
 
     private fun updateMenu(fragmentType: NamesOfFragment){
-//        if (userType == 1) {
-            _miAppendFaculty?.isVisible = fragmentType == NamesOfFragment.FACULTY
-            _miUpdateFaculty?.isVisible = fragmentType == NamesOfFragment.FACULTY
-            _miDeleteFaculty?.isVisible = fragmentType == NamesOfFragment.FACULTY
-            _miAppendGroup?.isVisible = fragmentType == NamesOfFragment.GROUP
-            _miUpdateGroup?.isVisible = fragmentType == NamesOfFragment.GROUP
-            _miDeleteGroup?.isVisible = fragmentType == NamesOfFragment.GROUP
-//        }
+        _miAppendFaculty?.isVisible = fragmentType == NamesOfFragment.FACULTY
+        _miUpdateFaculty?.isVisible = fragmentType == NamesOfFragment.FACULTY
+        _miDeleteFaculty?.isVisible = fragmentType == NamesOfFragment.FACULTY
+        _miAppendGroup?.isVisible = fragmentType == NamesOfFragment.GROUP
+        _miUpdateGroup?.isVisible = fragmentType == NamesOfFragment.GROUP
+        _miDeleteGroup?.isVisible = fragmentType == NamesOfFragment.GROUP
+        if (AuthStatus.userType != 1) {
+            _miAppendFaculty?.isVisible = false
+            _miUpdateFaculty?.isVisible = false
+            _miDeleteFaculty?.isVisible = false
+            _miAppendGroup?.isVisible = false
+            _miUpdateGroup?.isVisible = false
+            _miDeleteGroup?.isVisible = false
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -144,12 +179,12 @@ class MainActivity : AppCompatActivity(), MainActivityCallbacks {
             }
             R.id.miUpdateGroup -> {
                 val fedit: Edit = CourseFragment.getInstance()
-                fedit.append()
+                fedit.update()
                 true
             }
             R.id.miDeleteGroup -> {
                 val fedit: Edit = CourseFragment.getInstance()
-                fedit.append()
+                fedit.delete()
                 true
             }
             else -> super.onOptionsItemSelected(item)

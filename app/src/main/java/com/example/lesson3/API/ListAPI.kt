@@ -6,6 +6,7 @@ import com.example.lesson3.data.Course
 import com.example.lesson3.data.Courses
 import com.example.lesson3.data.Food
 import com.example.lesson3.data.Foods
+import com.example.lesson3.data.Spasibo
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -60,6 +61,6 @@ interface ListAPI{
 
     @Headers("Content-Type: application/json")
     @POST("user")
-    fun login(@Body user: PostUser): Call<Int>
+    fun login(@Body user: PostUser): Call<Spasibo>
 
 }

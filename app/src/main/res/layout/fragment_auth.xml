@@ -69,9 +69,13 @@
         app:layout_constraintTop_toBottomOf="@+id/etPwd" />
 
     <TextView
-        android:id="@+id/authError"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
-        tools:layout_editor_absoluteX="155dp"
-        tools:layout_editor_absoluteY="85dp" />
+        android:id="@+id/authBrurb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="466dp"
+        android:layout_marginEnd="233dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

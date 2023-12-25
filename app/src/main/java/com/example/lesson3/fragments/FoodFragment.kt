@@ -16,8 +16,10 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.lesson3.MainActivity
 import com.example.lesson3.NamesOfFragment
 import com.example.lesson3.R
 import com.example.lesson3.data.Course
@@ -134,6 +136,11 @@ class FoodFragment : Fragment(){
                     itemView.findViewById<ImageButton>(R.id.ibDeleteStudent).setOnClickListener{
                         deleteDialog()
                     }
+                    if (MainActivity.AuthStatus.userType != 1){
+                        itemView.findViewById<ImageButton>(R.id.ibEditStudent).isVisible = false
+                        itemView.findViewById<ImageButton>(R.id.ibDeleteStudent).isVisible = false
+                    }
+
                     itemView.findViewById<ImageButton>(R.id.ibPhone).setOnClickListener {
 //                        if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
 //                            val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:${food.phone}"))
