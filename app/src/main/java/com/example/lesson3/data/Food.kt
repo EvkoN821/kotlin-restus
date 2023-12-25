@@ -27,7 +27,11 @@ data class Food(
     @SerializedName("price") var price: Int=0,
     @SerializedName("calories") var calories: Int=0,
     @SerializedName("course_id") @ColumnInfo(name="course_id") var courseID: Int=0, //UUID?=null,
-    @SerializedName("info") var info: String=""
+    @SerializedName("info") var info: String="",
+    @SerializedName("comp") var comp: String="",
+    @SerializedName("prep") var prep: Int=0
+
+
 ){
     val shortName
         get()=name
