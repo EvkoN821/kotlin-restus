@@ -1,9 +1,6 @@
 package com.example.lesson3.fragments
 
 import android.app.AlertDialog
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,7 +11,6 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -123,8 +119,22 @@ class FoodFragment : Fragment(){
                     this.food= food
                     if (food==viewModel.student)
                         updateCurrentView(itemView)
-                    val tv = itemView.findViewById<TextView>(R.id.tvStudentName)
-                    tv.text=food.shortName
+                    val tvName = itemView.findViewById<TextView>(R.id.tvName)
+                    tvName.text=food.name
+                    val tvWeight = itemView.findViewById<TextView>(R.id.tvWeight)
+                    tvWeight.text= food.weight.toString()
+                    val tvPrice = itemView.findViewById<TextView>(R.id.tvPrice)
+                    tvPrice.text= food.price.toString()
+//                    viewModel.set_Group(course, 1)
+                    tvName.setOnClickListener {
+                        viewModel.update_info(1)
+                    }
+                    tvWeight.setOnClickListener {
+                        viewModel.update_info( 3)
+                    }
+                    tvPrice.setOnClickListener {
+                        viewModel.update_info( 2)
+                    }
                     val cl = itemView.findViewById<ConstraintLayout>(R.id.clStudent)
                     cl.setOnClickListener {
                         viewModel.setCurrentStudent(food)

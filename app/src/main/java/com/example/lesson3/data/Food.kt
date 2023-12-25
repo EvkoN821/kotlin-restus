@@ -35,4 +35,8 @@ data class Food(
 ){
     val shortName
         get()=name
+    val getPrice
+        get()=price
+    val getWeight
+        get()=weight
 }

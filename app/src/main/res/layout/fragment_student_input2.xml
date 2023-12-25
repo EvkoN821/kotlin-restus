@@ -18,7 +18,7 @@
             android:layout_marginTop="32dp"
             android:text="Отмена"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etComp" />
+            app:layout_constraintTop_toBottomOf="@+id/etPrep" />
 
         <Button
             android:id="@+id/btSave"
@@ -151,7 +151,7 @@
             app:layout_constraintTop_toBottomOf="@+id/etInfo" />
 
         <EditText
-            android:id="@+id/etPrep"
+            android:id="@+id/etComp"
             android:layout_width="0dp"
             android:layout_height="41dp"
             android:layout_marginStart="16dp"
@@ -165,7 +165,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
         <EditText
-            android:id="@+id/etComp"
+            android:id="@+id/etPrep"
             android:layout_width="0dp"
             android:layout_height="41dp"
             android:layout_marginStart="16dp"
@@ -184,7 +184,7 @@
             android:layout_marginStart="16dp"
             android:text="Время приготовления"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etPrep" />
+            app:layout_constraintTop_toBottomOf="@+id/etComp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

@@ -105,7 +105,10 @@ class AppRepository {
 
     fun getCourseFoods(courseID: Int) =
         (listOfFood.value?.filter { it.courseID == courseID }?.sortedBy { it.shortName }?: listOf())
-
+    fun getCourseFoodsByPrice(courseID: Int) =
+        (listOfFood.value?.filter { it.courseID == courseID }?.sortedBy { it.getPrice }?: listOf())
+    fun getCourseFoodsByWeight(courseID: Int) =
+        (listOfFood.value?.filter { it.courseID == courseID }?.sortedBy { it.getWeight }?: listOf())
     private val listDB by lazy {OfflineDBRepository(ListDatabase.getDatabase(MyApplication.context).listDAO())}
 
     private val myCoroutineScope = CoroutineScope(Dispatchers.Main)
