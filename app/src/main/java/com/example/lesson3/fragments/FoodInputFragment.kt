@@ -46,32 +46,32 @@ class FoodInputFragment : Fragment() {
             binding.etName.setError("Введите корректные данные")
             flag_validation = false
         }
-        if (et2.isBlank()) {
+        if (et2.isBlank() or !(et5.toString().toInt() > 1)) {
             binding.etWeight.requestFocus()
             binding.etWeight.setError("Введите корректные данные")
             flag_validation = false
         }
-        if (et3.isBlank()) {
+        if (et3.isBlank() or !(et5.toString().toInt() > 1)) {
             binding.etPrice.requestFocus()
             binding.etPrice.setError("Введите корректные данные")
             flag_validation = false
         }
-        if (et4.isBlank() or ! et1.matches(Regex("^[a-zA-Z_]+$"))) {
+        if (et4.isBlank()) {
             binding.etInfo.requestFocus()
             binding.etInfo.setError("Введите корректные данные")
             flag_validation = false
         }
-        if (et5.isBlank()) {
+        if (et5.isBlank() or !(et5.toString().toInt() > 1)) {
             binding.editCalories.requestFocus()
             binding.editCalories.setError("Введите корректные данные")
             flag_validation = false
         }
-        if (et6.isBlank() or ! et1.matches(Regex("^[a-zA-Z_]+$"))) {
+        if (et6.isBlank()) {
             binding.etComp.requestFocus()
             binding.etComp.setError("Введите корректные данные")
             flag_validation = false
         }
-        if (et7.isBlank()) {
+        if (et7.isBlank() or !(et7.toString().toInt() > 1)) {
             binding.etPrep.requestFocus()
             binding.etPrep.setError("Введите корректные данные")
             flag_validation = false

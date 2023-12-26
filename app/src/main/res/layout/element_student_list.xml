@@ -22,14 +22,12 @@
         android:id="@+id/tvName"
         android:layout_width="182dp"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:layout_marginTop="2dp"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/llStudentButtons"
-        app:layout_constraintHorizontal_bias="0.533"
+
         app:layout_constraintStart_toEndOf="@+id/ibPhone"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/llStudentButtons"
@@ -65,7 +63,6 @@
         android:id="@+id/tvWeight"
         android:layout_width="182dp"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/llStudentButtons"
         app:layout_constraintStart_toEndOf="@+id/ibPhone"
@@ -75,7 +72,6 @@
         android:id="@+id/tvPrice"
         android:layout_width="182dp"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/llStudentButtons"
         app:layout_constraintStart_toEndOf="@+id/ibPhone"

@@ -126,15 +126,32 @@ class FoodFragment : Fragment(){
                     val tvPrice = itemView.findViewById<TextView>(R.id.tvPrice)
                     tvPrice.text= "цена: " + food.price.toString() + "руб."
 //                    viewModel.set_Group(course, 1)
-                    tvName.setOnClickListener {
+//                    tvName.setOnClickListener {
+//                        viewModel.update_info(1)
+//                    }
+//                    tvWeight.setOnClickListener {
+//                        viewModel.update_info(3)
+//                    }
+//                    tvPrice.setOnClickListener {
+//                        viewModel.update_info( 2)
+//                    }
+                    tvName.setOnLongClickListener {
+                        tvName.callOnClick()
                         viewModel.update_info(1)
+                        true
                     }
-                    tvWeight.setOnClickListener {
-                        viewModel.update_info( 3)
+                    tvWeight.setOnLongClickListener{
+                        tvWeight.callOnClick()
+                        viewModel.update_info(3)
+                        true
                     }
-                    tvPrice.setOnClickListener {
-                        viewModel.update_info( 2)
+                    tvPrice.setOnLongClickListener{
+                        tvPrice.callOnClick()
+                        viewModel.update_info(2)
+                        true
                     }
+
+
                     val cl = itemView.findViewById<ConstraintLayout>(R.id.clStudent)
                     cl.setOnClickListener {
                         viewModel.setCurrentStudent(food)
