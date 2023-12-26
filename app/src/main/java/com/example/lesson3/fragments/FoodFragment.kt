@@ -79,7 +79,7 @@ class FoodFragment : Fragment(){
     private fun deleteDialog(){
         AlertDialog.Builder(requireContext())
             .setTitle("Удаление!")
-            .setMessage("Вы действительно хотите удалить студента ${viewModel.student?.shortName ?: ""}?")
+            .setMessage("Вы действительно хотите удалить это блюдо ${viewModel.student?.shortName ?: ""}?")
             .setPositiveButton("да"){_,_ ->
                 viewModel.deleteStudent()
             }
@@ -106,7 +106,7 @@ class FoodFragment : Fragment(){
 
     private fun editStudent(food: Food? = null){
         (requireActivity() as MainActivityCallbacks).showFragment(NamesOfFragment.STUDENT, food)
-        (requireActivity() as MainActivityCallbacks).newTitle("Группа ${viewModel.course!!.name}")
+        (requireActivity() as MainActivityCallbacks).newTitle("Категория блюд ${viewModel.course!!.name}")
     }
 
     private inner class StudentAdapter(private val items: List<Food>)

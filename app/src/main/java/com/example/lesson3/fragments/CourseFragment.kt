@@ -75,23 +75,22 @@ class CourseFragment : Fragment(), MainActivity.Edit {
 
         for (i in 0 until (courseList.size)){
             binding.tlGroup.addTab(binding.tlGroup.newTab().apply {
-                text= courseList.get(i).name
+                text = courseList.get(i).name
             })
         }
 
-        val adapter= GroupPageAdapter(requireActivity(), viewModel.courseList.value)
-        binding.vpGroup.adapter=adapter
+        val adapter = GroupPageAdapter(requireActivity(), viewModel.courseList.value)
+        binding.vpGroup.adapter = adapter
         TabLayoutMediator(binding.tlGroup, binding.vpGroup, true, true){
                 tab,pos ->
             tab.text=courseList.get(pos).name
         }.attach()
         tabPosition=0
         if(viewModel.group!=null)
-            tabPosition= if(viewModel.getGroupListPosition>=0)
+            tabPosition = if(viewModel.getGroupListPosition>=0)
                 viewModel.getGroupListPosition
         else
             0
-
         viewModel.setCurrentGroup(tabPosition)
         binding.tlGroup.selectTab(binding.tlGroup.getTabAt(tabPosition), true)
         binding.tlGroup.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{

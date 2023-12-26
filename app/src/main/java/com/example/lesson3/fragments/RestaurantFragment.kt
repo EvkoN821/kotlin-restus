@@ -79,7 +79,7 @@ class FacultyFragment:Fragment(), MainActivity.Edit {
     private fun deleteDialog(){
         AlertDialog.Builder(requireContext())
             .setTitle("Удаление")
-            .setMessage("Вы действительно хотите удалить факультет ${viewModel.faculty?.name ?: ""}?")
+            .setMessage("Вы действительно хотите удалить ресторан ${viewModel.faculty?.name ?: ""}?")
             .setPositiveButton("ДА") {_, _ ->
                 viewModel.deleteFaculty()
             }
@@ -94,7 +94,7 @@ class FacultyFragment:Fragment(), MainActivity.Edit {
         val messageText = mDialogView.findViewById<TextView>(R.id.tvInfo)
         val inputString = mDialogView.findViewById<EditText>(R.id.etString)
         inputString.setText(facultyName)
-        messageText.text="укажите название факультета"
+        messageText.text="Укажите название ресторана"
 
         AlertDialog.Builder(requireContext())
             .setTitle("ИЗМЕНЕНИЕ ДАННЫХ")
@@ -165,6 +165,6 @@ class FacultyFragment:Fragment(), MainActivity.Edit {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (context as MainActivityCallbacks).newTitle("Список факультетов")
+        (context as MainActivityCallbacks).newTitle("Список ресторанов")
     }
 }

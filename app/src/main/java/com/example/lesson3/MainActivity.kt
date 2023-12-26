@@ -9,7 +9,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.addCallback
-import androidx.core.view.isVisible
 import com.example.lesson3.data.Food
 import com.example.lesson3.fragments.FacultyFragment
 import com.example.lesson3.fragments.CourseFragment
@@ -43,7 +42,7 @@ public class MainActivity : AppCompatActivity(), MainActivityCallbacks {
         btnAuth = findViewById(R.id.btnAuth)
         btnAuth.setOnClickListener(auth)
         authBrurb = findViewById(R.id.authBrurb)
-        authBrurb.setOnClickListener(sukablyad)
+        authBrurb.setOnClickListener(authListener)
         authBrurb.text = "-1"
 
 
@@ -80,7 +79,7 @@ public class MainActivity : AppCompatActivity(), MainActivityCallbacks {
         }
     }
 
-    val sukablyad = View.OnClickListener {
+    val authListener = View.OnClickListener {
         AuthStatus.userType = authBrurb.text.toString().toInt()
         if (AuthStatus.userType != -1){
             start()
@@ -203,7 +202,7 @@ public class MainActivity : AppCompatActivity(), MainActivityCallbacks {
             NamesOfFragment.GROUP->{
                 supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.fcMain, CourseFragment.getInstance())
+                    .replace(R.id.fcMain, CourseFragment.newInstance())
                     .addToBackStack(null)
                     .commit()
             }
