@@ -5,26 +5,29 @@
     android:id="@+id/clStudent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+
     android:clickable="true">
 
     <ImageButton
-        android:id="@+id/ibPhone"
+        android:id="@+id/ibInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:src="@android:drawable/stat_sys_phone_call"
+        android:src="@android:drawable/ic_dialog_info"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvStudentName"
+        android:id="@+id/tvName"
         android:layout_width="182dp"
-        android:layout_height="20dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/llStudentButtons"
-        app:layout_constraintStart_toEndOf="@+id/ibPhone"
+
+        app:layout_constraintStart_toEndOf="@+id/ibInfo"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
@@ -56,4 +59,22 @@
             android:layout_weight="1"
             android:src="@android:drawable/ic_menu_delete" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvWeight"
+        android:layout_width="182dp"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/llStudentButtons"
+        app:layout_constraintStart_toEndOf="@+id/ibInfo"
+        app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+    <TextView
+        android:id="@+id/tvPrice"
+        android:layout_width="182dp"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/llStudentButtons"
+        app:layout_constraintStart_toEndOf="@+id/ibInfo"
+        app:layout_constraintTop_toBottomOf="@+id/tvWeight" />
 </androidx.constraintlayout.widget.ConstraintLayout>

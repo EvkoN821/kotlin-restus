@@ -1,20 +1,18 @@
 package com.example.lesson3.fragments
 
 import android.app.AlertDialog
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -64,8 +62,17 @@ class FoodFragment : Fragment(){
         viewModel.foodList.observe(viewLifecycleOwner){
             binding.rvStudent.adapter=StudentAdapter(it)
         }
+        //### !!!!
+        if (MainActivity.AuthStatus.userType == 1){
+            binding.fabNewStudent.visibility = VISIBLE
+        } else {
+            binding.fabNewStudent.visibility = INVISIBLE
+        }
         binding.fabNewStudent.setOnClickListener{
             editStudent(Food().apply { courseID = viewModel.course!!.id })
+        }
+        binding.btnSearch.setOnClickListener {
+            viewModel.search(binding.etSearch.text.toString())
         }
     }
 
@@ -81,10 +88,25 @@ class FoodFragment : Fragment(){
             .create()
             .show()
     }
+    private fun infoDialog(){
+        AlertDialog.Builder(requireContext())
+            .setTitle("Полная информация")
+            .setMessage("Наименование блюда: ${viewModel.student?.shortName ?: ""} " +
+                    "\n\nВес блюда: ${viewModel.student?.getWeight ?: ""} гр." +
+                    "\n\nЦена: ${viewModel.student?.getPrice ?: ""} руб." +
+                    "\n\nКалории: ${viewModel.student?.calories ?: ""} ккал." +
+                    "\n\nДополнительная информация: ${viewModel.student?.info ?: ""}" +
+                    "\n\nИнгридиенты: ${viewModel.student?.comp ?: ""}" +
+                    "\n\nВремя приготовления: ${viewModel.student?.prep ?: ""} минут")
+            .setNegativeButton("скрыть", null)
+            .setCancelable(true)
+            .create()
+            .show()
+    }
 
     private fun editStudent(food: Food? = null){
         (requireActivity() as MainActivityCallbacks).showFragment(NamesOfFragment.STUDENT, food)
-        (requireActivity() as MainActivityCallbacks).newTitle("Группа${viewModel.course!!.name}")
+        (requireActivity() as MainActivityCallbacks).newTitle("Группа ${viewModel.course!!.name}")
     }
 
     private inner class StudentAdapter(private val items: List<Food>)
@@ -123,8 +145,39 @@ class FoodFragment : Fragment(){
                     this.food= food
                     if (food==viewModel.student)
                         updateCurrentView(itemView)
-                    val tv = itemView.findViewById<TextView>(R.id.tvStudentName)
-                    tv.text=food.shortName
+                    val tvName = itemView.findViewById<TextView>(R.id.tvName)
+                    tvName.text="Наименование: " + food.name
+                    val tvWeight = itemView.findViewById<TextView>(R.id.tvWeight)
+                    tvWeight.text= "вес порции: " +food.weight.toString() + "гр."
+                    val tvPrice = itemView.findViewById<TextView>(R.id.tvPrice)
+                    tvPrice.text= "цена: " + food.price.toString() + "руб."
+//                    viewModel.set_Group(course, 1)
+//                    tvName.setOnClickListener {
+//                        viewModel.update_info(1)
+//                    }
+//                    tvWeight.setOnClickListener {
+//                        viewModel.update_info(3)
+//                    }
+//                    tvPrice.setOnClickListener {
+//                        viewModel.update_info( 2)
+//                    }
+                    tvName.setOnLongClickListener {
+                        tvName.callOnClick()
+                        viewModel.update_info(1)
+                        true
+                    }
+                    tvWeight.setOnLongClickListener{
+                        tvWeight.callOnClick()
+                        viewModel.update_info(3)
+                        true
+                    }
+                    tvPrice.setOnLongClickListener{
+                        tvPrice.callOnClick()
+                        viewModel.update_info(2)
+                        true
+                    }
+
+
                     val cl = itemView.findViewById<ConstraintLayout>(R.id.clStudent)
                     cl.setOnClickListener {
                         viewModel.setCurrentStudent(food)
@@ -136,29 +189,33 @@ class FoodFragment : Fragment(){
                     itemView.findViewById<ImageButton>(R.id.ibDeleteStudent).setOnClickListener{
                         deleteDialog()
                     }
+                    itemView.findViewById<ImageButton>(R.id.ibInfo).setOnClickListener {
+                        infoDialog()
+                    }
                     if (MainActivity.AuthStatus.userType != 1){
                         itemView.findViewById<ImageButton>(R.id.ibEditStudent).isVisible = false
                         itemView.findViewById<ImageButton>(R.id.ibDeleteStudent).isVisible = false
                     }
 
-                    itemView.findViewById<ImageButton>(R.id.ibPhone).setOnClickListener {
-//                        if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
-//                            val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:${food.phone}"))
-//                            startActivity(intent)
-//                        }
-//                        else {
-//                            ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.CALL_PHONE), 2)
-//                        }
-                    }
+//                    itemView.findViewById<ImageButton>(R.id.ibInfo).setOnClickListener {
+////                        if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+////                            val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:${food.phone}"))
+////                            startActivity(intent)
+////                        }
+////                        else {
+////                            ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.CALL_PHONE), 2)
+////                        }
+//                    }
 
                     val llb = itemView.findViewById<LinearLayout>(R.id.llStudentButtons)
                     llb.visibility=View.INVISIBLE
                     llb?.layoutParams=llb?.layoutParams.apply { this?.width=1 }
-                    val ib=itemView.findViewById<ImageButton>(R.id.ibPhone)
+                    val ib=itemView.findViewById<ImageButton>(R.id.ibInfo)
                     ib.visibility=View.INVISIBLE
                     cl.setOnLongClickListener{
                         cl.callOnClick()
                         llb.visibility=View.VISIBLE
+                        ib.visibility=View.VISIBLE
                         MainScope().
                         launch{
                             val lp= llb?.layoutParams
@@ -169,8 +226,8 @@ class FoodFragment : Fragment(){
                                 lp?.width=lp?.width!!+35
                                 llb?.layoutParams=lp
                                 ip.width=ip.width+10
-                                if (ib.visibility==View.VISIBLE)
-                                    ib.layoutParams=ip
+//                                if (ib.visibility==View.VISIBLE)
+//                                    ib.layoutParams=ip
                                 delay(50)
                             }
                         }
