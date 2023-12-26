@@ -6,6 +6,8 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.LinearLayout
@@ -59,6 +61,12 @@ class FoodFragment : Fragment(){
         viewModel.set_Group(course)
         viewModel.foodList.observe(viewLifecycleOwner){
             binding.rvStudent.adapter=StudentAdapter(it)
+        }
+        //### !!!!
+        if (MainActivity.AuthStatus.userType == 1){
+            binding.fabNewStudent.visibility = VISIBLE
+        } else {
+            binding.fabNewStudent.visibility = INVISIBLE
         }
         binding.fabNewStudent.setOnClickListener{
             editStudent(Food().apply { courseID = viewModel.course!!.id })
