@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/clStudent"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="wrap_content"
 
     android:clickable="true">
 
@@ -21,8 +21,9 @@
     <TextView
         android:id="@+id/tvName"
         android:layout_width="182dp"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:text="TextView"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/llStudentButtons"
         app:layout_constraintHorizontal_bias="0.533"
@@ -63,9 +64,9 @@
     <TextView
         android:id="@+id/tvWeight"
         android:layout_width="182dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
         android:text="TextView"
+        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/llStudentButtons"
         app:layout_constraintStart_toEndOf="@+id/ibPhone"
         app:layout_constraintTop_toBottomOf="@+id/tvName" />
@@ -73,9 +74,9 @@
     <TextView
         android:id="@+id/tvPrice"
         android:layout_width="182dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
         android:text="TextView"
+        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/llStudentButtons"
         app:layout_constraintStart_toEndOf="@+id/ibPhone"
         app:layout_constraintTop_toBottomOf="@+id/tvWeight" />

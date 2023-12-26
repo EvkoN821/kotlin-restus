@@ -120,11 +120,11 @@ class FoodFragment : Fragment(){
                     if (food==viewModel.student)
                         updateCurrentView(itemView)
                     val tvName = itemView.findViewById<TextView>(R.id.tvName)
-                    tvName.text=food.name
+                    tvName.text="Наименование: " + food.name
                     val tvWeight = itemView.findViewById<TextView>(R.id.tvWeight)
-                    tvWeight.text= food.weight.toString()
+                    tvWeight.text= "вес порции: " +food.weight.toString() + "гр."
                     val tvPrice = itemView.findViewById<TextView>(R.id.tvPrice)
-                    tvPrice.text= food.price.toString()
+                    tvPrice.text= "цена: " + food.price.toString() + "руб."
 //                    viewModel.set_Group(course, 1)
                     tvName.setOnClickListener {
                         viewModel.update_info(1)
