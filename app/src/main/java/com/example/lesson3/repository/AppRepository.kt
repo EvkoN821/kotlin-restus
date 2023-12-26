@@ -113,6 +113,9 @@ class AppRepository {
 
     private val myCoroutineScope = CoroutineScope(Dispatchers.Main)
 
+    fun getSearch(s: String, courseID: Int) =
+        (listOfFood.value?.filter { ((s in it.name.toString() ) or (s in it.price.toString()) or (s in it.weight.toString()) ) and (it.courseID == courseID) }?.sortedBy { it.shortName }?: listOf())
+
     fun onDestroy(){
         myCoroutineScope.cancel()
     }

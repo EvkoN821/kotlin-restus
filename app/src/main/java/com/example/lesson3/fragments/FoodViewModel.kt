@@ -32,6 +32,11 @@ class FoodViewModel : ViewModel() {
             _food=it
         }
     }
+    fun search(s: String){
+        AppRepository.getInstance().listOfFood.observeForever{
+            foodList.postValue(AppRepository.getInstance().getSearch(s, course!!.id))
+        }
+    }
     fun set_Group(course: Course) {
         this.course = course
         AppRepository.getInstance().listOfFood.observeForever {

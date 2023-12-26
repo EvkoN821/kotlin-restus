@@ -71,6 +71,9 @@ class FoodFragment : Fragment(){
         binding.fabNewStudent.setOnClickListener{
             editStudent(Food().apply { courseID = viewModel.course!!.id })
         }
+        binding.btnSearch.setOnClickListener {
+            viewModel.search(binding.etSearch.text.toString())
+        }
     }
 
     private fun deleteDialog(){
