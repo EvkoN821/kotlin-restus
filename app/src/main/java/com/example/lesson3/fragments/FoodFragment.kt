@@ -77,6 +77,21 @@ class FoodFragment : Fragment(){
             .create()
             .show()
     }
+    private fun infoDialog(){
+        AlertDialog.Builder(requireContext())
+            .setTitle("Полная информация")
+            .setMessage("Наименование блюда: ${viewModel.student?.shortName ?: ""} " +
+                    "\n\nВес блюда: ${viewModel.student?.getWeight ?: ""} гр." +
+                    "\n\nЦена: ${viewModel.student?.getPrice ?: ""} руб." +
+                    "\n\nКалории: ${viewModel.student?.calories ?: ""} ккал." +
+                    "\n\nДополнительная информация: ${viewModel.student?.info ?: ""}" +
+                    "\n\nИнгридиенты: ${viewModel.student?.comp ?: ""}" +
+                    "\n\nВремя приготовления: ${viewModel.student?.prep ?: ""} минут")
+            .setNegativeButton("скрыть", null)
+            .setCancelable(true)
+            .create()
+            .show()
+    }
 
     private fun editStudent(food: Food? = null){
         (requireActivity() as MainActivityCallbacks).showFragment(NamesOfFragment.STUDENT, food)
@@ -163,29 +178,33 @@ class FoodFragment : Fragment(){
                     itemView.findViewById<ImageButton>(R.id.ibDeleteStudent).setOnClickListener{
                         deleteDialog()
                     }
+                    itemView.findViewById<ImageButton>(R.id.ibInfo).setOnClickListener {
+                        infoDialog()
+                    }
                     if (MainActivity.AuthStatus.userType != 1){
                         itemView.findViewById<ImageButton>(R.id.ibEditStudent).isVisible = false
                         itemView.findViewById<ImageButton>(R.id.ibDeleteStudent).isVisible = false
                     }
 
-                    itemView.findViewById<ImageButton>(R.id.ibPhone).setOnClickListener {
-//                        if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
-//                            val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:${food.phone}"))
-//                            startActivity(intent)
-//                        }
-//                        else {
-//                            ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.CALL_PHONE), 2)
-//                        }
-                    }
+//                    itemView.findViewById<ImageButton>(R.id.ibInfo).setOnClickListener {
+////                        if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+////                            val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:${food.phone}"))
+////                            startActivity(intent)
+////                        }
+////                        else {
+////                            ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.CALL_PHONE), 2)
+////                        }
+//                    }
 
                     val llb = itemView.findViewById<LinearLayout>(R.id.llStudentButtons)
                     llb.visibility=View.INVISIBLE
                     llb?.layoutParams=llb?.layoutParams.apply { this?.width=1 }
-                    val ib=itemView.findViewById<ImageButton>(R.id.ibPhone)
+                    val ib=itemView.findViewById<ImageButton>(R.id.ibInfo)
                     ib.visibility=View.INVISIBLE
                     cl.setOnLongClickListener{
                         cl.callOnClick()
                         llb.visibility=View.VISIBLE
+                        ib.visibility=View.VISIBLE
                         MainScope().
                         launch{
                             val lp= llb?.layoutParams
@@ -196,8 +215,8 @@ class FoodFragment : Fragment(){
                                 lp?.width=lp?.width!!+35
                                 llb?.layoutParams=lp
                                 ip.width=ip.width+10
-                                if (ib.visibility==View.VISIBLE)
-                                    ib.layoutParams=ip
+//                                if (ib.visibility==View.VISIBLE)
+//                                    ib.layoutParams=ip
                                 delay(50)
                             }
                         }
